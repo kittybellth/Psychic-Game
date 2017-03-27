@@ -4,8 +4,7 @@ var guessCount = "3";
 var userGuess = [];
 var computerChoice = ["a","e","i","o","u"];
 var computerGuess = "";
-var computerRandom = computerChoice[Math.floor(Math.random()*computerChoice.length)];
-	
+
 // initialize guessount
 document.getElementById("guessCount").innerHTML = guessCount;
 
