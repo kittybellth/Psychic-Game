@@ -1,3 +1,31 @@
+
+// welcome pop-up
+var gotName = false
+
+while(gotName == false) {
+
+	// ask name
+	var name = prompt("Hey! What's your name?");
+
+		// user has to type somthing in the box otherwise the pop-up will ask again
+		if(name == "") {
+			gotName = false;
+		}
+
+		// user must not click cancel otherwise the pop-up will ask again
+		else if (name !== "null") {
+
+			// if user type something it will ask for confirm
+			// if user clicks cancel it will ask again other it will show welcome sentence
+			if (confirm("Are you sure your name is " + name + " ?")) {
+			document.getElementById("welcome").innerHTML = ("<h1> Welcome to Psychic-Game " + name + " !</h1>");
+			gotName = true;
+			
+			}
+		}
+};
+
+// Global Variable
 var winCount = "";
 var loseCount = "";
 var guessCount = "3";
@@ -13,11 +41,10 @@ function computerPick (){
 	computerGuess = computerChoice[Math.floor(Math.random()*computerChoice.length)]
 	console.log("ComputerChoice = " + computerGuess);
 };
-
 	computerPick();
 
 
-// create clear array function
+// create restart function
 function reset () {
 	userGuess = [];
 	document.getElementById("userGuesses").innerHTML = userGuess;
@@ -36,7 +63,8 @@ document.onkeyup = function main (event) {
 		userGuess.push(userInput);
 		document.getElementById("userGuesses").innerHTML = ("<button>" + userGuess + "</button>");
 	
-
+		// create condition if usertype matches with computer random inside event function
+		// if it matches win score increases
 		if (userInput == computerGuess) {
 			winCount++;
 			console.log("win " + winCount);
@@ -45,12 +73,14 @@ document.onkeyup = function main (event) {
 			computerPick();
 		}
 
+		// if it doesn't match guessCount decreases
 		else if (userInput !== computerGuess) {
 			guessCount--;
 			console.log("guess " + guessCount);
 			document.getElementById("guessCount").innerHTML = guessCount;
 
-			if (guessCount == "-1") {
+			// if guessCount decrease to "0" lose score inceases
+			if (guessCount == "0") {
 				loseCount++;
 				console.log("guess " + loseCount);
 				document.getElementById("userLose").innerHTML = loseCount;
