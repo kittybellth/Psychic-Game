@@ -16,7 +16,7 @@ while(gotName == false) {
 		else if (name !== "null") {
 
 			// if user type something it will ask for confirm
-			// if user clicks cancel it will ask again other it will show welcome sentence
+			// if user clicks cancel it will ask again other it will show welcome message
 			if (confirm("Are you sure your name is " + name + " ?")) {
 			document.getElementById("welcome").innerHTML = ("<h1> Welcome to Psychic-Game " + name + " !</h1>");
 			gotName = true;
@@ -26,20 +26,23 @@ while(gotName == false) {
 };
 
 // Global Variable
-var winCount = "";
-var loseCount = "";
-var guessCount = "3";
+var winCounter = "";
+var loseCounter = "";
+var guessCounter = "3";
 var userGuess = [];
 var computerChoice = ["a","e","i","o","u"];
 var computerGuess = "";
 
 // initialize guessount
-document.getElementById("guessCount").innerHTML = guessCount;
+document.getElementById("guessCount").innerHTML = guessCounter;
 
 // create computer guess
 function computerPick (){
 	computerGuess = computerChoice[Math.floor(Math.random()*computerChoice.length)]
 	console.log("ComputerChoice = " + computerGuess);
+	document.getElementById("computer-picked").innerHTML = computerGuess;
+	document.getElementById("computer-picked").style.visibility = "hidden";
+	
 };
 	computerPick();
 
@@ -48,9 +51,9 @@ function computerPick (){
 function reset () {
 	userGuess = [];
 	document.getElementById("userGuesses").innerHTML = userGuess;
-	guessCount = "3";
-	console.log("guess " + guessCount);
-	document.getElementById("guessCount").innerHTML = guessCount;
+	guessCounter = "3";
+	console.log("guess " + guessCounter);
+	document.getElementById("guessCount").innerHTML = guessCounter;
 };
 
 
@@ -62,35 +65,45 @@ document.onkeyup = function main (event) {
 		console.log("userInput = " + userInput);
 		userGuess.push(userInput);
 		document.getElementById("userGuesses").innerHTML = ("<button>" + userGuess + "</button>");
-	
+	}
 		// create condition if usertype matches with computer random inside event function
 		// if it matches win score increases
 		if (userInput == computerGuess) {
-			winCount++;
-			console.log("win " + winCount);
-			document.getElementById("userWin").innerHTML = winCount;
+			winCounter++;
+			console.log("win " + winCounter);
+			document.getElementById("userWin").innerHTML = winCounter;
 			reset();
 			computerPick();
 		}
 
 		// if it doesn't match guessCount decreases
 		else if (userInput !== computerGuess) {
-			guessCount--;
-			console.log("guess " + guessCount);
-			document.getElementById("guessCount").innerHTML = guessCount;
+			guessCounter--;
+			console.log("guess " + guessCounter);
+			document.getElementById("guessCount").innerHTML = guessCounter;
 
 			// if guessCount decrease to "0" lose score inceases
-			if (guessCount == "0") {
-				loseCount++;
-				console.log("guess " + loseCount);
-				document.getElementById("userLose").innerHTML = loseCount;
+			if (guessCounter == "0") {
+				loseCounter++;
+				console.log("guess " + loseCounter);
+				document.getElementById("userLose").innerHTML = loseCounter;
 				reset();
+				computerPick();
 			}
 		}
-	}
 };
 
+document.getElementById("answer").onmousedown = function() {
+document.getElementById("computer-picked").style.visibility = "visible";
+};
 
+document.getElementById("answer").onmouseup = function() {
+document.getElementById("computer-picked").style.visibility = "hidden";
+};
+
+document.getElementById("answer").mouseDown = function() {
+document.getElementById("computer-picked").style.visibility = "visible";
+}
 
 
 
